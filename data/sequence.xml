@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<odoo>
+    <data noupdate='1'>
+        <record id='seq_education_school' model='ir.sequence'>
+            <field name='name'>School Code</field>
+            <field name='code'>education.school</field>
+            <field name='prefix'>SH</field>
+            <field name='padding'>5</field>
+            <field name='company_id' eval='False'/>
+        </record>
+    </data>
+    <data noupdate='1'>
+        <record id='seq_education_student' model='ir.sequence'>
+            <field name='name'>Student Code</field>
+            <field name='code'>education.student</field>
+            <field name='prefix'>SID</field>
+            <field name='padding'>5</field>
+            <field name='company_id' eval='False'/>
+        </record>
+    </data>
+</odoo>

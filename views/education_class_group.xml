@@ -1,0 +1,47 @@
+<odoo>
+
+    <!-- View Tree để hiển thị danh sách các Education Class Group -->
+    <record id="view_education_class_group_tree" model="ir.ui.view">
+        <field name="name">education.class.group.tree</field>
+        <field name="model">education.class.group</field>
+        <field name="arch" type="xml">
+            <tree string="Education Class Groups">
+                <field name="name"/>
+                <field name="parent_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View Form để chỉnh sửa Education Class Group -->
+    <record id="view_education_class_group_form" model="ir.ui.view">
+        <field name="name">education.class.group.form</field>
+        <field name="model">education.class.group</field>
+        <field name="arch" type="xml">
+            <form string="Education Class Group">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="parent_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Child Groups">
+                            <field name="child_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="parent_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action để mở form cho model education.class.group -->
+    <record id="education_class_group_action" model="ir.actions.act_window">
+        <field name="name">Class Group</field>
+        <field name="res_model">education.class.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

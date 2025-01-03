@@ -1,0 +1,34 @@
+<odoo>
+    <template id="education_assets_frontend">
+        <xpath expr="." position="inside">
+            <link href="/v_education/static/src/css/education_style.css" rel="stylesheet" type="text/css"/>
+            <link href="/v_education/static/src/css/education_style.scss" rel="stylesheet" type="text/css"/>
+            <script src="/v_education/static/src/js/education.js" type="text/javascript"/>
+        </xpath>
+    </template>
+    <template id="course" name="Course">
+      <t t-call="website.layout">
+        <div class="container">
+            <div class="row">
+                <t t-foreach="courses" t-as="course">
+                    <div class="col-sm-4">
+                        <div class="card m-3" style="width: 20rem;">
+                        <img src="https://image.freepik.com/free-photo/coding-man_1098-18084.jpg"
+                            class="card-img-top" alt="image"/>
+                        <div class="card-body" id="card_body">
+                            <h3 t-field = "course.name" class="card-title"/>
+                            <div class = "mt-1" id="tags">
+                            <p t-field = "course.type_of_course" class="badge bg-danger"/>
+                            <p t-field = "course.level_of_course" class="badge badge-success"/>
+                        </div>
+                            <p class="card-text">With <t t-esc = "course.number_of_lesson" /> lessons</p>
+                            <a href="#" class="btn btn-primary">Start learning</a>
+                        </div>
+                        </div>
+                    </div>
+                </t>
+                </div>
+        </div>
+      </t>
+   </template>
+</odoo>

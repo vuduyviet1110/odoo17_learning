@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="education_student_view_form" model="ir.ui.view">
+            <field name="name">education.student.form</field>
+            <field name="model">education.student</field>
+            <field name="arch" type="xml">
+                <form string="Student Form">
+                    <header>
+                        <button name="%(education_student_dropout_wizard_action)d" string="Dropout" type="action" class="oe_highlight"/>
+                        <button name="%(education_class_group_action)d" string="View Class" type="action" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" options="{'clickable': True}"/>
+                        <button name="change_to_new" type="object" string="New"/>
+                        <button name="change_to_studying" type="object" string="Studying"/>
+                        <button name="change_to_off" type="object" string="Off"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Enter the student's full name"/>
+                                <field name="student_code" placeholder="Enter the student's code"/>
+                                <field name="gender" widget="radio"/>
+                                <field name="date_of_birth"/>
+                                <field name="age" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="class_id" placeholder="Select a class"/>
+                                <field name="school_id" placeholder="Select a school"/>
+                                <field name="school_code" readonly="1"/>
+                                <field name="school_address" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="total_score"/>
+                            <field name="currency_id"/>
+                            <field name="amount_paid"/>
+                            <field name='state'/>
+                            <field name="dropout_reason" invisible="state != 'off'"/>
+                        </group>
+                        <notebook>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <record id="education_student_view_tree" model="ir.ui.view">
+            <field name="name">education.student.tree</field>
+            <field name="model">education.student</field>
+            <field name="arch" type="xml">
+                <tree string="Student Tree" default_order="student_code asc">
+                    <field name="name"/>
+                    <field name="student_code"/>
+                    <field name="gender"/>
+                    <field name="class_id"/>
+                    <field name="school_id"/>
+                    <field name="total_score"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+        <record id="education_student_view_search" model="ir.ui.view">
+            <field name="name">education.student.search</field>
+            <field name="model">education.student</field>
+            <field name="arch" type="xml">
+                <search string="Students Search">
+                    <field name="name"/>
+                    <field name="student_code"/>
+                    <field name="class_id"/>
+                    
+                    <filter string="By Class" name="filter_class" domain="[('class_id', '!=', False)]"/>
+                    <filter string="Unassigned Class" name="filter_unassigned_class" domain="[('class_id', '=', False)]"/>
+                    <filter name="filter_active_student" string="Active Students" domain="[('state', '=', 'studying')]"/>
+
+                    <filter string="Inactive" name="filter_inactive_student" domain="[('state', '=', 'off')]"/>
+                    
+                    <group expand="1" string="Group By">
+                        <filter string="Class" name="group_by_class" context="{'group_by':'class_id'}"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter string="School" name="group_by_school" context="{'group_by':'school_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+
+        <!-- Action để mở form student -->
+        <record id="education_student_action" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">education.student</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_by_class': 1}</field>
+        </record>
+        
+    </data>
+</odoo>

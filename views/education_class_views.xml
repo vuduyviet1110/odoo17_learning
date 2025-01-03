@@ -1,0 +1,89 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="education_class_view_form" model="ir.ui.view">
+            <field name="name">education.class.form</field>
+            <field name="model">education.class</field>
+            <field name="arch" type="xml">
+                <form string="Class Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Enter class name" required="1"/>
+                                <field name="school_id" placeholder="Select a school" required="1"/>
+                            </group>
+                            <group>
+                                <field name="teacher_ids" widget="many2many_tags" placeholder="Add teachers"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Students">
+                                <field name="student_ids">
+                                    <tree string="Students">
+                                        <field name="name"/>
+                                        <field name="student_code"/>
+                                        <field name="gender"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Classes">
+                                <field name="class_ids">
+                                    <tree string="Classes">
+                                        <field name="name"/>
+                                        <field name="school_id"/>
+                                        <button name="change_class_name" type="object" string="Change Name" />
+                                        <button name="add_student" type="object" string="Add Student" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="education_class_view_tree" model="ir.ui.view">
+            <field name="name">education.class.tree</field>
+            <field name="model">education.class</field>
+            <field name="arch" type="xml">
+                <tree string="Class Tree">
+                    <field name="name"/>
+                    <field name="school_id"/>
+                    <button name="%(education_student_action)d" string="Add Student" type="action" class="oe_highlight"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="education_class_view_search" model="ir.ui.view">
+            <field name="name">education.class.search</field>
+            <field name="model">education.class</field>
+            <field name="arch" type="xml">
+                <search string="Search Classes">
+                    <field name="name"/>
+                    <field name="school_id"/>
+                    
+                    <!-- Filters -->
+                    <filter string="With Students" name="filter_with_students" domain="[('student_ids', '!=', False)]"/>
+                    <filter string="Without Students" name="filter_without_students" domain="[('student_ids', '=', False)]"/>
+                    
+                    <!-- Group By -->
+                    <group expand="1" string="Group By">
+                        <filter string="School" name="group_by_school" context="{'group_by': 'school_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action to Open the Class Views -->
+        <record id="education_class_action" model="ir.actions.act_window">
+            <field name="name">Classes</field>
+            <field name="res_model">education.class</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+
+        
+    </data>
+</odoo>

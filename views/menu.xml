@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Menu Gốc -->
+        <menuitem name="Education" sequence="30" id="education_menu_root" />
+
+        <!-- Menu Con -->
+        <!-- Students -->
+        <menuitem id="education_student_menu" 
+                  name="Students" 
+                  parent="education_menu_root" 
+                  action="education_student_action" 
+                  sequence="10" />
+
+        <!-- Class Groups -->
+        <menuitem id="education_class_group_menu" 
+                  name="Class Groups" 
+                  parent="education_menu_root" 
+                  sequence="20" />
+
+        <menuitem id="menu_education_class_group" 
+                  name="Class Group Management" 
+                  parent="education_class_group_menu" 
+                  action="education_class_group_action" 
+                  sequence="10" />
+
+        <!-- Classes -->
+        <menuitem id="education_class_menu" 
+                  name="Classes" 
+                  parent="education_menu_root" 
+                  action="education_class_action" 
+                  sequence="30" />
+        <menuitem id="menu_education_school" name="Schools" parent="education_menu_root" action="action_education_school" sequence="10"/>
+    </data>
+</odoo>
