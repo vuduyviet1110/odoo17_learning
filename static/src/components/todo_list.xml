@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<template xml:space="preserve">
+    <t t-name='v_education.VtodoList' owl='1'>
+        <div class='todo-list-container'>
+           <div class='row mx-2 mt-3'>
+                <div class='col-lg-6'>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" t-on-click='addTask'>New</button>
+                </div>
+                <div class='col-lg-6'>
+                    <div class='input-group'>
+                        <input type='text' class='form-control' t-ref='searchInput' t-on-keyup='searchTasks' placeholder='Search here...'/>       
+                        <button class='btn btn-outline-primary' t-on-click='searchTasks'>Search</button>             
+                    </div>
+                </div>
+           </div>
+           <div class='row mx-2 mt-3'>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Task Description</th>
+                        <th scope="col">Completed</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach='state.taskList' t-as='task' t-key='task.id'>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" t-att-for='task.id' type="checkbox" value="" id="flexCheckDefault" t-att-checked='task.completed' t-on-click="(e)=>this.toggleTask(e,task)"/>
+                                    <label class="form-check-label" t-att-for='task.id' t-attf-class="#{task.completed and 'text-decoration-line-through' }" for="flexCheckDefault">
+                                       <span t-esc='task.name'/>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="color" class="form-control form-control-color" id="exampleColorInput" t-att-value="task.color" t-on-change="(e)=>this.updateColor(e,task)" title="Choose your color"/>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" t-on-click='()=>this.editTask(task)' data-bs-target="#exampleModal">Edit</button><button type="button" class="btn btn-danger" t-on-click='()=>this.deleteTask(task)'>Delete</button>
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+           </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit/Add?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row">
+                    <label for="taskname" class="col-sm-2 col-form-label">Task Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" t-model='state.task.name' t-att-value='state.task.name' id="taskname"/>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="ColorInput" class="col-sm-2 col-form-label">Color</label>
+                    <div class="col-sm-10">
+                        <input type="color" class="form-control form-control-color" id="ColorInput" t-model='state.task.color' t-att-value='state.task.color' title="Choose your color"/>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="completed" class="col-sm-2 col-form-label">Completed</label>
+                    <div class="col-sm-10">
+                        <input class="form-check-input" t-model='state.task.completed' t-att-checked='state.task.completed' type="checkbox" value="" id="completed"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" t-on-click='saveTask'>Save Task</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </t>
+
+</template>

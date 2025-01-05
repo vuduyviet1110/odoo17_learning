@@ -8,6 +8,8 @@ class DropDownWizard(models.TransientModel):
     _description = 'Education Student Dropout Wizard'
 
     def _default_student(self):
+        # khi mở wizard ra thì lấy current record
+        # bằng cách dùng context để lấy active_model và active_id
         active_model = self.env.context.get('active_model')
         active_id = self.env.context.get('active_id')
         return self.env[active_model].browse(active_id)
@@ -20,4 +22,15 @@ class DropDownWizard(models.TransientModel):
     def action_confirm_dropout(self):
         self.student_id.dropout_reason = self.dropout_reason
         self.student_id.state = 'off'
-        return {'type': 'ir.actions.act_window_close'}
+
+        # Lấy view form của lớp học
+        view_id = self.env.ref('v_education.education_class_view_form').id
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Class Form',
+            'view_mode': 'form',
+            'res_model': 'education.class',
+            'views': [(view_id, 'form')],
+            'res_id': self.student_id.class_id.id,
+            'target': 'current',
+        }

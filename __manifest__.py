@@ -13,7 +13,11 @@
         "views/education_class_group.xml",
         'views/education_student_views.xml',
         'views/student_level_views.xml',
+        # 'views/education_subject_views.xml',
+        'views/education_class_schedule_views.xml',
+        'views/education_admission_report.xml',
         'views/education_class_views.xml',
+        'views/education_student_todolist.xml',
         'views/education_school.xml',
         'views/menu.xml',
         "views/template.xml",  
@@ -23,9 +27,17 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "/v_education/static/src/css/education_style.css",
-            "/v_education/static/src/css/education_style.scss",
-            "/v_education/static/src/js/education.js",
+            # "/v_education/static/src/css/education_style.css",
+            # "/v_education/static/src/css/education_style.scss",
+            # "/v_education/static/src/js/education.js",
+            # 'v_education/static/src/components/*/*.js',
+            # 'v_education/static/src/components/*/*.xml',
+            # 'v_education/static/src/components/*/*.scss',
+        ],
+        "web.assets_backend": [
+            "v_education/static/src/components/todo_list.scss",
+            "v_education/static/src/components/todo_list.js",
+            "v_education/static/src/components/todo_list.xml",
         ],
     },
 

@@ -9,6 +9,11 @@
         <menuitem id="education_student_menu" 
                   name="Students" 
                   parent="education_menu_root" 
+                  sequence="10" />
+
+        <menuitem id="education_student_profile" 
+                  name="Profile" 
+                  parent="education_student_menu" 
                   action="education_student_action" 
                   sequence="10" />
 
@@ -31,5 +36,14 @@
                   action="education_class_action" 
                   sequence="30" />
         <menuitem id="menu_education_school" name="Schools" parent="education_menu_root" action="action_education_school" sequence="10"/>
+
+
+        <menuitem id="menu_education_class_schedule" name="Class Schedules" parent="education_menu_root" sequence='10' action="action_education_class_schedule"/>
+
+        <menuitem id="menu_education_admission_report" name="Addmission" parent="education_menu_root" sequence='10' action="action_education_admission_report"/>
+        
+        
+        <menuitem id="menu_education_todolist_action" name="TodoList" parent="education_student_menu" sequence='10' action="action_education_student_todolist"/>
+        <menuitem id="menu_education_todolist_action_js" name="TodoList OWL" parent="education_student_menu" sequence='10' action="action_education_student_todolist_js"/>
     </data>
 </odoo>

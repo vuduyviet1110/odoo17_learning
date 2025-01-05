@@ -14,9 +14,13 @@ class EducationStudent(models.Model):
                          store=False, compute_sudo=True)
     active = fields.Boolean(string='Active', default=True)
     notes = fields.Text(string='Internal Notes')
+    country_id = fields.Many2one('res.country', 'Country')
+    mobile = fields.Char('Mobile')
+    email = fields.Char('Email')
+    image_128 = fields.Image('Image')
     attached_file = fields.Binary('Attached File', groups='base.group_user')
     description = fields.Html(string='Description', sanitize=True, strip_style=False)
-    total_score = fields.Float(string='Total Score', digits=(16, 2))  
+    total_score = fields.Float(string='Total Score', digits=(3, 2))  
     write_date = fields.Datetime(string='Last Updated on')
     currency_id = fields.Many2one('res.currency', string='Currency')
     amount_paid = fields.Monetary('Amount Paid', currency_field='currency_id')
@@ -28,6 +32,7 @@ class EducationStudent(models.Model):
     school_id = fields.Many2one('education.school', string='School')
     school_code = fields.Char(related='school_id.code', string='School Code')
     school_address = fields.Char(related='school_id.address', string='School Address')
+    class_group_id = fields.Many2one('education.class.group', string='Class Group')
 
     _sql_constraints = [
         ('student_code_unique', 'unique(student_code)', "The student code must be unique!"),
@@ -60,6 +65,11 @@ class EducationStudent(models.Model):
                 record.age = current_year - record.date_of_birth.year
             else:
                 record.age = 0
+
+    @api.onchange('class_id')
+    def _onchange_class_id(self):
+        if self.class_id:
+            self.class_group_id = self.class_id.class_group_id
 
     def _inverse_age(self):
         for record in self:

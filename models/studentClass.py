@@ -10,8 +10,7 @@ class EducationClass(models.Model):
    class_ids = fields.One2many('education.class', 'school_id', string='Classes')
    student_ids = fields.One2many('education.student', 'class_id', string='Students')
    teacher_ids = fields.Many2many('res.partner', string='Teachers')
-
-
+   class_group_id = fields.Many2one('education.class.group', string='Class Group')
    def get_all_students(self):
         student = self.env['education.student']
         all_students = student.search([])

@@ -5,3 +5,6 @@ access_education_class_group,education.class.group,model_education_class_group,b
 access_education_student_class,education.student.class,model_education_class,base.group_user,1,1,1,1
 ace_education_school,access_education_school,model_education_school,base.group_user,1,1,1,1
 access_education_student_dropout_wizard,education.student.dropout.wizard,model_education_student_dropout_wizard,base.group_user,1,1,1,1
+access_eudcation_sudent_subject,education.student.schedule,model_education_class_schedule,base.group_user,1,1,1,1
+access_education_admission_report,education.admission.report,model_education_admission_report,base.group_user,1,1,1
+aceess_education_student_todolist,education.education.student.todolist,model_education_student_todolist,base.group_user,1,1,1
