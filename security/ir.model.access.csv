@@ -1,10 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-ace_student,education.student user,model_education_student,,1,1,1,1
-ace_student_teacher,education.student teacher,model_education_student,group_teacher,1,1,1,1
-access_education_class_group,education.class.group,model_education_class_group,base.group_user,1,1,1,1
-access_education_student_class,education.student.class,model_education_class,base.group_user,1,1,1,1
-ace_education_school,access_education_school,model_education_school,base.group_user,1,1,1,1
-access_education_student_dropout_wizard,education.student.dropout.wizard,model_education_student_dropout_wizard,base.group_user,1,1,1,1
-access_eudcation_sudent_subject,education.student.schedule,model_education_class_schedule,base.group_user,1,1,1,1
-access_education_admission_report,education.admission.report,model_education_admission_report,base.group_user,1,1,1
-aceess_education_student_todolist,education.education.student.todolist,model_education_student_todolist,base.group_user,1,1,1
+access_education_student_user,education.student.user,model_education_student,v_education.group_education_student,1,0,0,0
+access_education_student_teacher,education.student.teacher,model_education_student,v_education.group_education_teacher,1,1,1,1
+access_education_student_admin,education.student.admin,model_education_student,v_education.v_education_group_admin,1,1,1,1
+access_education_class_group_user,education.class.group.user,model_education_class_group,v_education.v_education_group_user,1,1,1,1
+access_education_student_class_user,education.student.class.user,model_education_class,v_education.v_education_group_user,1,1,1,1
+access_education_school_admin,education.school.admin,model_education_school,v_education.v_education_group_admin,1,1,1,1
+access_education_student_dropout_wizard_user,education.student.dropout.wizard.user,model_education_student_dropout_wizard,v_education.v_education_group_user,1,1,1,1
+access_education_class_schedule_teacher,education.class.schedule.teacher,model_education_class_schedule,v_education.group_education_teacher,1,1,1,0
+access_education_admission_report_admin,education.admission.report.admin,model_education_admission_report,v_education.v_education_group_admin,1,0,0,0
+access_education_student_todolist_user,education.student.todolist.user,model_education_student_todolist,v_education.group_education_student,1,1,1,1
+

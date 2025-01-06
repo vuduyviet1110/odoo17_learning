@@ -23,6 +23,7 @@
         "views/template.xml",  
         'data/sequence.xml',
         'security/groups.xml',
+        'security/security.xml',
         'security/ir.model.access.csv',
     ],
     "assets": {

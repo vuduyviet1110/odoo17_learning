@@ -157,10 +157,11 @@
 
         <!-- Action để mở form student -->
         <record id="education_student_action" model="ir.actions.act_window">
-            <field name="name">Students</field>
+            <field name="name">All Students</field>
             <field name="res_model">education.student</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="context">{'search_default_group_by_class': 1}</field>
+            <field name="limit">20</field>
         </record>
         
     </data>
