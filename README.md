@@ -1,0 +1,1 @@
+[commit 4] I used this app as a third-party application outside of Odoo to practice Odoo webhooks by sending data every time a new student is created: https://github.com/vuduyviet1110/employeeManage_learningPython_zen8labs
