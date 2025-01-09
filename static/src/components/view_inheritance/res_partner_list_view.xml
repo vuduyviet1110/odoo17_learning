@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<templates>
+    <t t-name='v_education.ResPartnerListView.Buttons' t-inherit='web.ListView.Buttons' owl='1'>
+        <xpath expr="//t[contains(@t-if, 'isExportEnable')]" position='before'>
+            <button class='btn btn-primary' t-on-click='openSaleView'>View Sales Orders</button>
+            <button class='btn btn-second ms-2'>View Invoices</button>
+            <button class='btn btn-primary ms-2'>View Meeting</button>
+        </xpath>
+    </t>
+</templates>

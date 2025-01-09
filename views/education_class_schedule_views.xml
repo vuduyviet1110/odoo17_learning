@@ -1,4 +1,3 @@
-<!-- views/education_class_schedule_view.xml -->
 <odoo>
     <record id="view_education_class_schedule_form" model="ir.ui.view">
         <field name="name">education.class.schedule.form</field>
@@ -18,6 +17,21 @@
         </field>
     </record>
 
+    <record id="view_education_class_schedule_tree" model="ir.ui.view">
+        <field name="name">education.class.schedule.tree</field>
+        <field name="model">education.class.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Class Schedules">
+                <field name="student_id"/>
+                <field name="class_group_id"/>
+                <field name="day_of_week"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
     <record id="action_education_class_schedule" model="ir.actions.act_window">
         <field name="name">Class Schedules</field>
         <field name="res_model">education.class.schedule</field>

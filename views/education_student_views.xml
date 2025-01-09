@@ -26,6 +26,7 @@
                                 <field name="student_code" placeholder="Enter the student's code"/>
                                 <field name="gender" widget="radio"/>
                                 <field name="date_of_birth"/>
+                                <field name="image_128"/>
                                 <field name="age" readonly="1"/>
                             </group>
                             <group>
@@ -33,14 +34,23 @@
                                 <field name="school_id" placeholder="Select a school"/>
                                 <field name="school_code" readonly="1"/>
                                 <field name="school_address" readonly="1"/>
+                                <field name="active" invisible="1"/>
                             </group>
                         </group>
                         <group>
-                            <field name="total_score"/>
-                            <field name="currency_id"/>
-                            <field name="amount_paid"/>
-                            <field name='state'/>
-                            <field name="dropout_reason" invisible="state != 'off'"/>
+                            <group>
+                                <field name="total_score"/>
+                                <field name="currency_id"/>
+                                <field name="amount_paid"/>
+                                <field name='state'/>
+                                <field name="dropout_reason" invisible="state != 'off'"/>
+                            </group>
+                            <group>
+                                <field name='mobile'/>
+                                <field name='email'/>
+                                <field name='country_id'/>
+                                <field name="state_id" domain="[('country_id', '=', country_id)]" />
+                            </group>
                         </group>
                         <notebook>
                             <page string="Notes">
@@ -54,9 +64,6 @@
                 </form>
             </field>
         </record>
-
-
-
 
         <record id="education_student_view_tree" model="ir.ui.view">
             <field name="name">education.student.tree</field>
@@ -72,9 +79,6 @@
                 </tree>
             </field>
         </record>
-
-
-
 
         <record id="education_student_view_search" model="ir.ui.view">
             <field name="name">education.student.search</field>
@@ -110,6 +114,7 @@
                         <field name="name" />
                         <field name="email"/>
                         <field name="country_id"/>
+                        <field name="state_id" domain="[('country_id', '=', country_id)]" />
                         <field name="mobile"/>
                     </group>
                 </form>
@@ -137,6 +142,10 @@
                                     <ul>
                                         <li>
                                             <field name="country_id"/>
+                                        </li>
+                                        <hr style="border-top: 1px solid #ccc; margin: 5px 0;"/>
+                                        <li>
+                                            <field name="state_id" domain="[('country_id', '=', country_id)]" />
                                         </li>
                                         <li>
                                             <field name="mobile"/>

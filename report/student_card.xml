@@ -1,0 +1,109 @@
+<odoo>
+    <template id="report_student_card_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <h2 style="color: #1a73e8;">Student Information Card</h2>
+                            <hr style="border-top: 2px solid #1a73e8;"/>
+                        </div>
+                    </div>
+                    
+                    <!-- Main content -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="border: 2px solid #ddd; border-radius: 8px; padding: 15px;">
+                                <div class="row mb-4">
+                                    <div class="col-4 text-center">
+                                        <div style="border: 3px solid #1a73e8; padding: 5px; display: inline-block;">
+                                            <img t-if="o.image_128" 
+                                                t-att-src="image_data_uri(o.image_128)" 
+                                                class="img-fluid" style="max-height: 150px;"/>
+                                            <img t-else=""
+                                                t-att-src="'/web/static/img/placeholder.png'" 
+                                                class="img-fluid" style="max-height: 150px;"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-8">
+                                        <table class="table table-borderless">
+                                            <tr>
+                                                <td><strong>Student ID:</strong></td>
+                                                <td><span t-field="o.student_code"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Full Name:</strong></td>
+                                                <td><span t-field="o.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Status:</strong></td>
+                                                <td>
+                                                    <span t-attf-class="badge #{
+                                                        'bg-success' if o.state == 'studying'
+                                                        else 'bg-warning' if o.state == 'new'
+                                                        else 'bg-danger'}" 
+                                                        style="padding: 8px; border-radius: 4px;">
+                                                        <t t-out="dict(o._fields['state'].selection).get(o.state)"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
+                                            <h4 class="mb-3">Personal Information</h4>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <p><strong>Gender:</strong> <span t-field="o.gender"/></p>
+                                                    <p><strong>Date of Birth:</strong> <span t-field="o.date_of_birth"/></p>
+                                                    <p><strong>Age:</strong> <span t-field="o.age"/></p>
+                                                    <p><strong>Country:</strong> <span t-field="o.country_id.name"/></p>
+                                                    <p><strong>City:</strong> <span t-field="o.state_id.name"/></p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p><strong>Mobile:</strong> <span t-field="o.mobile"/></p>
+                                                    <p><strong>Email:</strong> <span t-field="o.email"/></p>
+                                                    <p><strong>Total Score:</strong> <span t-field="o.total_score"/></p>
+                                                    <p><strong>Amount Paid:</strong> 
+                                                        <t t-if="o.currency_id">
+                                                            <span t-field="o.amount_paid" 
+                                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span t-esc="o.amount_paid"/>
+                                                        </t>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div t-if="o.notes" style="border-left: 4px solid #1a73e8; padding-left: 15px;">
+                                            <h5>Notes:</h5>
+                                            <p t-field="o.notes"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer Information -->
+                                <div class="row mt-4">
+                                    <div class="col-12 text-right">
+                                        <small>Last Updated: <span t-field="o.write_date"/></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

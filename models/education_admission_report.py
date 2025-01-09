@@ -4,8 +4,8 @@ class EducationAdmissionReport(models.Model):
     _name = 'education.admission.report'
     _description = 'Education Admission Report'
     _auto = False
-
     # Các trường trong view
+    student_id = fields.Many2one('education.student', string='Student', required=True, ondelete='cascade')
     name = fields.Char(string='Name', readonly=True)
     start_date = fields.Date(string='Start Date', readonly=True)
     end_date = fields.Date(string='End Date', readonly=True)
@@ -28,32 +28,38 @@ class EducationAdmissionReport(models.Model):
     ], string='Day of Week', readonly=True)
     start_time = fields.Float(string='Start Time', readonly=True)
     end_time = fields.Float(string='End Time', readonly=True)
+    _constraints = [
+        ('student_id', 'unique(student_id)', 'Each student can only have one admission report.')
+    ]
 
     # def _query_education_admission_report(self):
     #     """
-    #     Định nghĩa truy vấn SQL để tạo view.
+    #     Define the SQL query to create the view.
     #     """
     #     _query = """
-    #         SELECT 
-    #             scs.id AS id,  -- ID của bảng schedule để làm khóa chính
-    #             scs.day_of_week AS day_of_week,
-    #             scs.start_time AS start_time,
-    #             scs.end_time AS end_time,
-    #             std.name AS name,  -- Tên của student từ bảng education_student
-    #             ear.start_date AS start_date,
-    #             ear.end_date AS end_date,
-    #             ear.school_year_id AS school_year_id,
-    #             ear.state AS state
-    #         FROM 
-    #             education_class_schedule scs
-    #         LEFT JOIN 
-    #             education_student std ON scs.student_id = std.id
-    #         LEFT JOIN 
-    #             education_admission_report ear ON std.id = ear.student_id
-    #         WHERE 
-    #             std.active = True
+    #     SELECT 
+    #         ecs.id AS schedule_id,                      -- ID của bảng lịch học
+    #         ecs.day_of_week AS day_of_week,            -- Thứ trong tuần
+    #         ecs.start_time AS start_time,              -- Thời gian bắt đầu
+    #         ecs.end_time AS end_time,                  -- Thời gian kết thúc
+    #         es.name AS student_name,                   -- Tên học sinh
+    #         ear.start_date AS admission_start_date,    -- Ngày bắt đầu nhập học
+    #         ear.end_date AS admission_end_date,        -- Ngày kết thúc nhập học
+    #         ear.school_year_id AS school_year_id,      -- Năm học
+    #         ear.state AS admission_state               -- Trạng thái nhập học
+    #     FROM 
+    #         education_class_schedule ecs               -- Bảng lịch học
+    #     LEFT JOIN 
+    #         education_student es ON ecs.student_id = es.id  -- Liên kết với bảng học sinh
+    #     LEFT JOIN 
+    #         education_admission_report ear ON es.id = ear.student_id  -- Liên kết với bảng báo cáo nhập học
+    #     WHERE 
+    #         es.active = TRUE                             -- Chỉ lấy học sinh đang hoạt động
+
     #     """
     #     return _query
+
+
 
     # def init(self):
     #     """

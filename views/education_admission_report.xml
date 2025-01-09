@@ -6,10 +6,11 @@
             <pivot string="Education Admission Analysis" disable_linking="True" sample="1">
                 <field name="name" type="row"/>
                 <field name="start_date" type="col"/>
-                <field name="state" type="measure"/>
+                <field name="state" type="row"/>
             </pivot>
         </field>
     </record>
+
 
     <record id="education_admission_report_search" model="ir.ui.view">
         <field name="name">education.admission.report.search</field>

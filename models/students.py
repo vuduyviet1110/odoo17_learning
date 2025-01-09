@@ -15,6 +15,7 @@ class EducationStudent(models.Model):
     active = fields.Boolean(string='Active', default=True)
     notes = fields.Text(string='Internal Notes')
     country_id = fields.Many2one('res.country', 'Country')
+    state_id = fields.Many2one('res.country.state', string='State', domain="[('country_id', '=', country_id)]")
     mobile = fields.Char('Mobile')
     email = fields.Char('Email')
     image_128 = fields.Image('Image')
@@ -22,8 +23,8 @@ class EducationStudent(models.Model):
     description = fields.Html(string='Description', sanitize=True, strip_style=False)
     total_score = fields.Float(string='Total Score', digits=(3, 2))  
     write_date = fields.Datetime(string='Last Updated on')
-    currency_id = fields.Many2one('res.currency', string='Currency')
-    amount_paid = fields.Monetary('Amount Paid', currency_field='currency_id')
+    amount_paid = fields.Monetary(string="Amount Paid", currency_field="currency_id")
+    currency_id = fields.Many2one('res.currency', string="Currency")
     state = fields.Selection(string='Status', selection=[('new', 'New'),('studying', 'Studying'),('off', 'Off')], default='new')
     dropout_reason = fields.Text(string='Dropout Reason')
 
