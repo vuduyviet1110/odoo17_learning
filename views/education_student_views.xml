@@ -15,6 +15,7 @@
                             invisible="state == 'off'"
                         />
                         <button name="%(education_class_group_action)d" string="View Class" type="action" class="oe_highlight"/>
+                        <button name='send_mail_template' type='object' string='Send Mail'/>
                         <field name="state" widget="statusbar" options="{'clickable': True}"/>
                         <button name="change_to_new" type="object" string="New"/>
                         <button name="change_to_studying" type="object" string="Studying"/>
@@ -91,7 +92,7 @@
                     
                     <filter string="By Class" name="filter_class" domain="[('class_id', '!=', False)]"/>
                     <filter string="Unassigned Class" name="filter_unassigned_class" domain="[('class_id', '=', False)]"/>
-                    <filter name="filter_active_student" string="Active Students" domain="[('state', '=', 'studying')]"/>
+                    <filter name="filter_active_student" string="Active Students" domain="['|', ('state', '=', 'studying'), ('state', '=', 'new')]"/>
 
                     <filter string="Inactive" name="filter_inactive_student" domain="[('state', '=', 'off')]"/>
                     

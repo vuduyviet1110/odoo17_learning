@@ -8,10 +8,12 @@
     "website": "https://www.zen8labs.com",
     "depends": ["base", "z_web", "website", "web"],
     "data": [
-        'security/groups.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
+        'report/report.xml',
         'data/sequence.xml',
+        'data/email_template.xml',
+        'data/cron.xml',
         'wizard/dropout_school.xml',
         'views/education_class_group.xml',
         'views/res_partner.xml',
@@ -24,17 +26,21 @@
         'views/education_school.xml',
         'views/menu.xml',
         'views/template.xml',  
-        'report/report.xml',
         'report/student_card.xml',
     ],
     "assets": {
-        "web.assets_frontend": [],
+        "web.assets_frontend": [
+            '/v_education/static/src/js/studentform.js',      
+        ],
         "web.assets_backend": [
             # '/v_education/static/src/components/view_inheritance/res_partner_kanban_view.xml',
             '/v_education/static/src/components/todo_list.xml',
             # '/v_education/static/src/components/view_inheritance/res_partner_kanban_view.js',
             '/v_education/static/src/components/todo_list.js',
             '/v_education/static/src/components/todo_list.scss',
+        ],
+        'web.assets_qweb': [
+            'v_education/static/src/xml/student_templates.xml',
         ],
     },
     "installable": True,

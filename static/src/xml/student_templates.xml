@@ -1,0 +1,21 @@
+<template id="StudentFormTemplate" name="Student Form">
+    <div class="student-form">
+        <h1>Student Form</h1>
+        <form t-on-submit.prevent="handleSubmit">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" t-model="state.name" placeholder="Enter your name" />
+            </div>
+            <div>
+                <label for="student_code">Student Code:</label>
+                <input type="text" id="student_code" t-model="state.student_code" placeholder="Enter student code" />
+            </div>
+            <div>
+                <label>Gender:</label>
+                <label><input type="radio" t-model="state.gender" value="male" /> Male</label>
+                <label><input type="radio" t-model="state.gender" value="female" /> Female</label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</template>

@@ -1,38 +1,78 @@
 <odoo>
+    <!-- Form View -->
+    <record id="education_admission_report_form_view" model="ir.ui.view">
+        <field name="model">education.admission.report</field>
+        <field name="arch" type="xml">
+            <form string="Education Admission Details" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <field name="student_id"/>
+                        <field name="student_code"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group>
+                        <field name="state"/>
+                        <field name="school_name"/>
+                        <field name="class_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="education_admission_report_tree_view" model="ir.ui.view">
+        <field name="model">education.admission.report</field>
+        <field name="arch" type="xml">
+            <tree string="Education Admission Report" create="false" delete="false">
+                <field name="student_id"/>
+                <field name="student_code"/>
+                <field name="school_name"/>
+                <field name="class_name"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="education_admission_report_search" model="ir.ui.view">
+        <field name="model">education.admission.report</field>
+        <field name="arch" type="xml">
+            <search string="Education Admission Analysis">
+                <field name="student_code"/>
+                <field name="student_id"/>
+                <field name="school_id"/>
+                <field name="class_id"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="School" name="group_school" context="{'group_by': 'school_id'}"/>
+                    <filter string="Class" name="group_class" context="{'group_by': 'class_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Pivot -->
     <record id="education_admission_report_pivot_view" model="ir.ui.view">
-        <field name="name">education.admission.report.pivot</field>
         <field name="model">education.admission.report</field>
         <field name="arch" type="xml">
             <pivot string="Education Admission Analysis" disable_linking="True" sample="1">
-                <field name="name" type="row"/>
+                <field name="student_id" type="row"/>
                 <field name="start_date" type="col"/>
                 <field name="state" type="row"/>
             </pivot>
         </field>
     </record>
 
-
-    <record id="education_admission_report_search" model="ir.ui.view">
-        <field name="name">education.admission.report.search</field>
-        <field name="model">education.admission.report</field>
-        <field name="arch" type="xml">
-            <search string="Education Admission Analysis">
-                <field name="name"/>
-                <group expand="1" string="Group By">
-                    <filter string="Status" name="grp_state" context="{'group_by':'state'}"/>
-                    <filter string="School Year" name="grp_school_year" context="{'group_by':'school_year_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
-
     <record id="action_education_admission_report" model="ir.actions.act_window">
         <field name="name">Admission Analysis</field>
         <field name="res_model">education.admission.report</field>
-        <field name="view_mode">pivot,search</field>
-        <field name="context">{}</field>
+        <field name="view_mode">form,pivot,search</field>
+        <field name="context">{'default_view_mode': 'form'}</field>
         <field name="domain">[]</field>
     </record>
-
 </odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id='student_email_template' model='mail.template'>
+        <field name='name'>Student Email Template</field>
+        <field name='model_id' ref='v_education.model_education_student'/>
+        <field name='subject'>Student Notifications</field>
+        <field name='email_from'>my2thsubmail@gmail.com</field>
+        <field name='email_to'>{{ object.email }}</field>
+        <field name='partner_to'>{{ object.write_uid.partner_id.id or False }}</field>
+        <!-- <field name='report_template' ref='v_education.report_student_card'/>
+        <field name='report_name'>Student_{{object.name}}_name</field> -->
+
+        <field name="body_html" type="html">
+            <t t-set="student_info" t-value="[
+                    {'label': 'School', 'value': object.school_id.name if object.school_id else 'N/A'},
+                    {'label': 'Class', 'value': object.class_id.name if object.class_id else 'N/A'},
+                    {'label': 'Mobile', 'value': object.mobile or 'N/A'},
+                    {'label': 'State', 'value': object.state or 'N/A'}
+                ]"/>
+                
+            <p>Dear <strong t-out="object.name or 'Student'" />,</p>
+            <p>Thank you for your admission to <span t-out="object.school_id.name or 'School'" />. 
+               Please double-check your information below. If any information is missing, please fill it out to process your admission.</p>
+            
+            <p><strong>Student Information:</strong></p>
+            <ul>
+                <t t-if="object.image_128">
+                    <img t-att-src="'data:image/png;base64,' + (object.image_128.decode() if isinstance(object.image_128, bytes) else object.image_128)" 
+                    style="width:70px; height:65px; object-fit:cover;" alt='img'/>
+                </t>
+                <t t-if="not object.image_128">
+                    <img src="/path/to/default/image.png" style="width:70px; height:65px; object-fit:cover;" alt='Default Image'/>
+                </t>
+                <t t-foreach="student_info" t-as="info">
+                    <t t-if="info['value'] != 'N/A'">
+                        <li><strong><span t-out="info['label']" />:</strong> <span t-out="info['value']" /></li>
+                    </t>
+                </t>
+            </ul>
+
+            <t t-if="not object.name or not object.student_code or not object.gender or not object.date_of_birth or not object.mobile or not object.email or not object.school_id">
+                <p><strong>Please complete your profile:</strong></p>
+                <ul>
+                    <t t-if="not object.name">
+                        <li>Name: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.student_code">
+                        <li>Student Code: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.gender">
+                        <li>Gender: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.date_of_birth">
+                        <li>Date of Birth: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.mobile">
+                        <li>Mobile: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.email">
+                        <li>Email: Please complete this field</li>
+                    </t>
+                    <t t-if="not object.school_id">
+                        <li>School: Please complete this field</li>
+                    </t>
+                </ul>
+            </t>
+            
+            <p>We look forward to having you with us.</p>
+            <p>Best regards,<br/>
+            The University Team</p>
+        </field>
+    </record>
+</odoo>

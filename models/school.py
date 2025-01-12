@@ -5,7 +5,8 @@ class EducationSchool(models.Model):
     _description = 'School'
 
     name = fields.Char(string='Name', required=True)
-    code = fields.Char(string='Code', default='New')
+    class_ids = fields.One2many('education.class', 'school_id', string='Classes')
+    code = fields.Char(string='Code', default='New', readonly=True)
     address = fields.Char(string='Address')
 
     @api.model_create_multi

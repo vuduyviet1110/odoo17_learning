@@ -14,5 +14,5 @@ class EducationClassSchedule(models.Model):
                                     ('saturday', 'Saturday'),
                                     ('sunday', 'Sunday')], 
                                    string='Day of Week', required=True)
-    start_time = fields.Float(string='Start Time', required=True)  # Time in hours (e.g., 9.5 for 9:30 AM)
-    end_time = fields.Float(string='End Time', required=True)  # Time in hours (e.g., 10.5 for 10:30 AM)
+    start_time = fields.Float(string='Start Time', required=True)  
+    end_time = fields.Float(string='End Time', required=True) 

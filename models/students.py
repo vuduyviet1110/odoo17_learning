@@ -31,6 +31,7 @@ class EducationStudent(models.Model):
     # trường liên kết
     class_id =fields.Many2one('education.class',string="Class",  ondelete="restrict")
     school_id = fields.Many2one('education.school', string='School')
+    school_name = fields.Many2one('school_id.name', string='School')
     school_code = fields.Char(related='school_id.code', string='School Code')
     school_address = fields.Char(related='school_id.address', string='School Address')
     class_group_id = fields.Many2one('education.class.group', string='Class Group')
@@ -39,6 +40,12 @@ class EducationStudent(models.Model):
         ('student_code_unique', 'unique(student_code)', "The student code must be unique!"),
         ('check_total_score', 'CHECK(total_score >= 0)', "The Total Score must be greater than or equal to 0!")
     ]
+
+    def send_mail_template(self):
+        template = self.env.ref('v_education.student_email_template')
+        for rec in self:
+            if rec.email:
+                template.send_mail(rec.id, force_send=True)
 
     @api.model_create_multi
     def create(self, vals_list):
