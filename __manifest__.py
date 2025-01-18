@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 {
     "name": "Viet education",
     "version": "1.0",
@@ -6,11 +7,13 @@
     "category": "zen8labs/zen8labs",
     "author": "zen8labs",
     "website": "https://www.zen8labs.com",
-    "depends": ["base", "z_web", "website", "web"],
+    "depends": ["base", "z_web", "website", "z_hr", "z_partner", "web"],
     "data": [
         'security/security.xml',
         'security/ir.model.access.csv',
         'report/report.xml',
+        # 'views/owl_student_api_view.xml',
+        'views/owl_student_templates.xml',
         'data/sequence.xml',
         'data/email_template.xml',
         'data/cron.xml',
@@ -29,19 +32,15 @@
         'report/student_card.xml',
     ],
     "assets": {
-        "web.assets_frontend": [
-            '/v_education/static/src/js/studentform.js',      
-        ],
         "web.assets_backend": [
-            # '/v_education/static/src/components/view_inheritance/res_partner_kanban_view.xml',
-            '/v_education/static/src/components/todo_list.xml',
-            # '/v_education/static/src/components/view_inheritance/res_partner_kanban_view.js',
-            '/v_education/static/src/components/todo_list.js',
-            '/v_education/static/src/components/todo_list.scss',
-        ],
-        'web.assets_qweb': [
-            'v_education/static/src/xml/student_templates.xml',
-        ],
+            'v_education/static/src/views/todo_list/todo_list.xml',
+            'v_education/static/src/views/todo_list/todo_list.js',
+            # 'v_education/static/src/views/student_form/owl_student_api_view.xml',
+            # 'v_education/static/src/views/student_form/owl_student_form.js',
+            # 'v_education/static/src/views/*/*.js',
+            # 'v_education/static/src/views/*/*.xml',
+            # 'v_education/static/src/student_form/*.scss',
+        ]
     },
     "installable": True,
     "license": "LGPL-3",

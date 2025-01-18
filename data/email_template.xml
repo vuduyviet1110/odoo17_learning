@@ -24,13 +24,13 @@
             
             <p><strong>Student Information:</strong></p>
             <ul>
-                <t t-if="object.image_128">
+                <!-- <t t-if="object.image_128">
                     <img t-att-src="'data:image/png;base64,' + (object.image_128.decode() if isinstance(object.image_128, bytes) else object.image_128)" 
                     style="width:70px; height:65px; object-fit:cover;" alt='img'/>
                 </t>
                 <t t-if="not object.image_128">
                     <img src="/path/to/default/image.png" style="width:70px; height:65px; object-fit:cover;" alt='Default Image'/>
-                </t>
+                </t> -->
                 <t t-foreach="student_info" t-as="info">
                     <t t-if="info['value'] != 'N/A'">
                         <li><strong><span t-out="info['label']" />:</strong> <span t-out="info['value']" /></li>

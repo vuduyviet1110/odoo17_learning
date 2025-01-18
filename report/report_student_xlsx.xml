@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <report id ="action_student_report_xlsx" string="Student Report" model='report.student.xlsx' report_type="xlsx" name='report.student.xlsx' file="report.student.xlsx" print_report_name='Student Report XLSX'/>
+    
+    </data>
+
+</odoo>

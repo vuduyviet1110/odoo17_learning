@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="v_education.owl_api_student_view" name="Student Form View">
+            <div class="container p-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Student Information</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <!-- Error Message Section -->
+                        <div t-if="state.error" class="alert alert-danger" role="alert">
+                            <span t-esc="state.error"/>
+                        </div>
+                        
+                        <!-- Student Information Section -->
+                        <div t-if="state.student" class="mb-4">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th class="bg-light w-25">Name</th>
+                                        <td><span t-esc="state.student.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">School</th>
+                                        <td><span t-esc="state.student.school"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Class</th>
+                                        <td><span t-esc="state.student.class"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Mobile</th>
+                                        <td><span t-esc="state.student.mobile"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">State</th>
+                                        <td><span t-esc="state.student.state"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Loading Message Section -->
+                        <div t-if="!state.student and !state.error" class="alert alert-info">
+                            Loading student data...
+                        </div>
+                        
+                        <!-- Refresh Button -->
+                        <button 
+                            class="btn btn-primary" 
+                            t-on-click="fetchStudentData">
+                            <i class="fa fa-refresh me-2"/>
+                            Refresh Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

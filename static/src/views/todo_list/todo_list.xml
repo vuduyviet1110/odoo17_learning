@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="v_education.VtodoList" owl="1">
+        <div class="container todo-list-container mt-4">
+            <!-- Loading Overlay -->
+            <div t-if="state.isLoading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white bg-opacity-75" style="z-index: 1050;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="row align-items-center mb-4">
+                <div class="col-md-3 mb-3 mb-md-0">
+                    <button type="button" 
+                            class="btn btn-outline-primary w-100" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#taskModal" 
+                            t-on-click="addTask"
+                            t-att-disabled="state.isLoading">
+                        <i class="fa fa-plus-circle me-1"></i> New Task
+                    </button>
+                </div>
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="input-group">
+                        <input type="text" 
+                               class="form-control" 
+                               t-ref="searchInput" 
+                               t-on-input="searchTasks"
+                               placeholder="Search tasks..." 
+                               t-att-disabled="state.isLoading"/>
+                        <button class="btn btn-outline-primary" 
+                                t-on-click="searchTasks"
+                                t-att-disabled="state.isLoading">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="d-flex gap-2">
+                        <button type="button" 
+                                class="btn btn-outline-success" 
+                                t-on-click="exportTasks"
+                                t-att-disabled="state.isLoading || !state.taskList.length">
+                            <i class="fa fa-download me-1"></i> Export
+                        </button>
+                        <div class="input-group">
+                            <input type="file" 
+                                   class="form-control" 
+                                   t-on-change="onFileChange" 
+                                   accept=".csv"
+                                   t-att-disabled="state.isLoading"/>
+                            <button type="button" 
+                                    class="btn btn-outline-primary" 
+                                    t-on-click="importTasks"
+                                    t-att-disabled="state.isLoading">
+                                <i class="fa fa-upload me-1"></i> Import
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter and Sort Section -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                   <select id="filterCategory" 
+                            class="form-control"
+                            t-model="state.filterCategory"
+                            t-on-change="filterTasks">
+                        <option value="">All Categories</option>
+                        <option t-foreach="state.categories" t-as="category" t-key="category" t-esc="category"/>
+                    </select>
+
+                    <select id="studentFilter"
+                            class="form-control"
+                            t-model="state.studentFilter"
+                            t-on-change="studentFilter">
+                        <option value="">All Students</option>
+                        <option t-foreach="state.students" t-as="student" t-key="student.id" 
+                                t-att-value="student.id" t-esc="student.name"/>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="d-flex gap-2">
+                        <select class="form-select" 
+                                t-model="state.sortBy" 
+                                t-on-change="sortTasks"
+                                t-att-disabled="state.isLoading">
+                            <option value="name">Sort by Name</option>
+                            <option value="category">Sort by Category</option>
+                            <option value="completed">Sort by Status</option>
+                        </select>
+                        <select class="form-select" 
+                                t-model="state.sortDirection" 
+                                t-on-change="sortTasks"
+                                t-att-disabled="state.isLoading">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div t-if="!state.taskList.length" class="text-center py-5">
+                <i class="fa fa-tasks fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No tasks found</h4>
+                <p class="text-muted">Tìm cái khác đi k thấy</p>
+            </div>
+
+            <!-- Task Table -->
+            <div t-else="" class="card">
+                <div class="table-responsive" style="max-height: 400px;">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>Status</th>
+                                <th>Task</th>
+                                <th>Description</th>
+                                <th>Color</th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="state.taskList" 
+                                t-as="task" 
+                                t-key="task.id" 
+                                class="align-middle">
+                                <td style="width: 40px;">
+                                    <input class="form-check-input" 
+                                           type="checkbox" 
+                                           t-att-checked="task.completed" 
+                                           t-on-change="(e) => this.toggleStatus(e,task)" 
+                                           t-att-disabled="state.isLoading"/>
+                                </td>
+                                <td>
+                                    <span t-attf-class="#{task.completed ? 'text-decoration-line-through text-muted' : ''}"
+                                          t-esc="task.name"/>
+                                </td>
+                                <td>
+                                    <span t-attf-class="#{task.completed ? 'text-decoration-line-through text-muted' : ''}"
+                                          t-esc="task.description"/>
+                                </td>
+                                <td style="width: 100px;">
+                                    <input type="color" 
+                                           class="form-control form-control-color w-100" 
+                                           t-att-value="task.color" 
+                                           t-on-change="(e) => this.updateColor(e, task)"
+                                           t-att-disabled="state.isLoading"/>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary" t-esc="task.category"/>
+                                </td>
+                                <td style="width: 120px;">
+                                    <div class="btn-group">
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-primary" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#taskModal" 
+                                                t-on-click="() => this.editTask(task)"
+                                                t-att-disabled="state.isLoading">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-danger" 
+                                                t-on-click="() => this.deleteTask(task)"
+                                                t-att-disabled="state.isLoading">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div t-if="state.totalPages > 1" class="d-flex justify-content-between align-items-center mt-3">
+                <div class="text-muted">
+                    Showing page <span t-esc="state.currentPage"/> of <span t-esc="state.totalPages"/>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mb-0">
+                        <!-- Previous button -->
+                        <li class="page-item" t-att-class="{'disabled': state.currentPage === 1 || state.isLoading}">
+                            <button class="page-link" t-on-click="prevPage">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                        </li>
+                        
+                        <!-- First page -->
+                        <li class="page-item" t-att-class="{'active': state.currentPage === 1, 'disabled': state.isLoading}">
+                            <button class="page-link" t-on-click="() => this.setPage(1)">1</button>
+                        </li>
+                        
+                        <!-- Ellipsis after first page -->
+                        <li t-if="state.currentPage &gt; 4" class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        
+                        <!-- Pages around current page -->
+                        <t t-foreach="[state.currentPage-1, state.currentPage, state.currentPage+1]" t-as="page" t-key="page">
+                            <li t-if="page &gt; 1 &amp;&amp; page &lt; state.totalPages" 
+                                class="page-item" 
+                                t-att-class="{'active': state.currentPage === page, 'disabled': state.isLoading}">
+                                <button class="page-link" 
+                                        t-on-click="() => this.setPage(page)" 
+                                        t-esc="page"/>
+                            </li>
+                        </t>
+                        
+                        <!-- Ellipsis before last page -->
+                        <li t-if="state.currentPage &lt; state.totalPages - 3" class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        
+                        <!-- Last page -->
+                        <li t-if="state.totalPages &gt; 1" 
+                            class="page-item" 
+                            t-att-class="{'active': state.currentPage === state.totalPages, 'disabled': state.isLoading}">
+                            <button class="page-link" 
+                                    t-on-click="() => this.setPage(state.totalPages)" 
+                                    t-esc="state.totalPages"/>
+                        </li>
+                        
+                        <!-- Next button -->
+                        <li class="page-item" t-att-class="{'disabled': state.currentPage === state.totalPages || state.isLoading}">
+                            <button class="page-link" t-on-click="nextPage">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Task Modal -->
+            <div class="modal fade" 
+                 id="taskModal" 
+                 tabindex="-1" 
+                 data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <t t-if="state.isEdit">Edit Task</t>
+                                <t t-else="">Add New Task</t>
+                            </h5>
+                            <button type="button" 
+                                    class="btn-close" 
+                                    data-bs-dismiss="modal"/>
+                        </div>
+                        <div class="modal-body">
+                            <form class="needs-validation" novalidate="novalidate">
+                               <div class="form-group">
+                                    <label for="student_id">Student</label>
+                                    <select id="student_id" class="form-control custom-select" t-on-change="onStudentSelect">
+                                        <t t-foreach="state.students" t-as="student" t-key="student.id">
+                                            <option t-att-value="student.id" t-esc="student.name"/>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label required">Task Name</label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           t-model="state.task.name"
+                                           required="required"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" 
+                                              t-model="state.task.description" 
+                                              rows="3"/>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label class="form-label">Category</label>
+                                        <select class="form-select" 
+                                                t-model="state.task.category">
+                                            <option t-foreach="state.categories" 
+                                                    t-as="category" 
+                                                    t-key="category" 
+                                                    t-att-value="category" 
+                                                    t-esc="category"/>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <label class="form-label">Color</label>
+                                        <input type="color" 
+                                               class="form-control form-control-color" 
+                                               t-model="state.task.color"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" 
+                                               class="form-check-input" 
+                                               t-model="state.task.completed"/>
+                                        <label class="form-check-label">Mark as completed</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" 
+                                    class="btn btn-secondary" 
+                                    data-bs-dismiss="modal"
+                                    t-att-disabled="state.isLoading">
+                                Cancel
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-primary" 
+                                    t-on-click="saveTask"
+                                    t-att-disabled="!state.task.name || state.isLoading">
+                                <t t-if="state.isLoading">
+                                    <span class="spinner-border spinner-border-sm me-1"/>
+                                    Saving...
+                                </t>
+                                <t t-else="">Save Task</t>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

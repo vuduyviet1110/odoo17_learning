@@ -1,0 +1,53 @@
+<odoo>
+    <template id="student_form_template" name="Student Form">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center mb-4">Student Information Form</h1>
+                <form class="bg-white p-4 rounded shadow-lg mx-auto" style="max-height: 75vh; overflow-y: auto;">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input t-att-value="student.name" id="name" name="name" type="text" class="form-control" required="true"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="student_code" class="form-label">Student Code</label>
+                        <input t-att-value="student.student_code" id="student_code" name="student_code" type="text" class="form-control" required="true"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select t-att-value="student.gender" id="gender" name="gender" class="form-select">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date_of_birth" class="form-label">Date of Birth</label>
+                        <input t-att-value="student.date_of_birth" id="date_of_birth" name="date_of_birth" type="date" class="form-control"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input t-att-value="student.email" id="email" name="email" type="email" class="form-control"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile</label>
+                        <input t-att-value="student.mobile" id="mobile" name="mobile" type="text" class="form-control"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea t-att-value="student.description" id="description" name="description" rows="4" class="form-control"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-4 py-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

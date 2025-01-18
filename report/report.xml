@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <!-- Định nghĩa báo cáo Student Card -->
+        <!-- Define báo cáo Student Card -->
         <record id="report_student_card" model="ir.actions.report">
             <field name="name">Student Card</field>
             <field name="model">education.student</field>

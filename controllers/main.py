@@ -1,11 +1,12 @@
 from odoo import http
 from odoo.http import request
 
-class EducationStudentController(http.Controller):
-    @http.route('/students/form', auth='public', type='http')
-    def student_form(self, **kwargs):
-        students = request.env['education.student'].sudo().search([])
+class StudentController(http.Controller):
 
-        return request.render('education.education_student_view_form', {
-            'students': students
+    @http.route('/student/form', type='http', auth="user", website=True)
+    def student_form(self, **kwargs):
+        student = request.env['education.student'].search([('id', '=', 1)], limit=1) 
+        
+        return request.render('v_education.action_student_form', {
+            'student': student,
         })

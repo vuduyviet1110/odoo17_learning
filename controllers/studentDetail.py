@@ -1,7 +1,8 @@
 from odoo import http
+import json
 
 class StudentController(http.Controller):
-    @http.route('/student/details', type='http', auth='public', website=True)
+    @http.route('/student/details', type='http', auth='public')
     def student_details(self):
         student = {
             'name': 'John Doe',
@@ -10,4 +11,7 @@ class StudentController(http.Controller):
             'mobile': '123456789',
             'state': 'California',
         }
-        return http.request.render('v_education.student_template', {'student': student})
+        return http.Response(
+            json.dumps(student), 
+            content_type='application/json; charset=utf-8'
+        )

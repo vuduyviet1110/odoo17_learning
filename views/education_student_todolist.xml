@@ -12,7 +12,10 @@
                         <group>
                             <field name="name" string="Name" />
                             <field name="completed" string="Completed" />
+                            <field name="student_id" />
                             <field name="color" string="Color" widget='color' />
+                            <field name="description" string='Description' />
+                            <field name="category"/>
                         </group>
                     </sheet>
                 </form>
@@ -26,7 +29,9 @@
                 <tree string="Education Student Todolist">
                     <field name="name" />
                     <field name="completed" />
-                    <field name="color" widget='color' />
+                    <field name="student_id" />
+                    <field name="description" />
+                    <field name="category"/>
                 </tree>
             </field>
         </record>
@@ -44,8 +49,5 @@
             <field name='tag'>v_education.action_owl_student_todolist_js</field>
         </record>
     
-    
     </data>
-
-
 </odoo>
